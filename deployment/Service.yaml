@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-app
+spec:
+  type: ClusterIP
+  selector:
+    app.kubernetes.io/instance: app-instance
+    app.kubernetes.io/name: app
+  ports:
+    - protocol: TCP
+      port: 8081
+      targetPort: 8081

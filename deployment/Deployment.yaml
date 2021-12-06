@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: app-instance
+      app.kubernetes.io/name: app
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/instance: app-instance
+        app.kubernetes.io/name: app
+    spec:
+      containers:
+      - name: frontend-app
+        image: image-registry.openshift-image-registry.svc:5000/frontend/frontend:v1
+        ports:
+        - containerPort: 8081
