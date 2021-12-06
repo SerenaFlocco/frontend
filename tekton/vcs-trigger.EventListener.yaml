@@ -13,7 +13,7 @@ spec:
           name: new-pipeline
         serviceAccountName: default
         workspaces:
-          - name: workspace
+          - name: shared
             volumeClaimTemplate:
               spec:
                 accessModes:
@@ -44,7 +44,7 @@ spec:
 apiVersion: route.openshift.io/v1
 kind: Route
 metadata:
-  name: vcs-trigger-2
+  name: vcs-trigger
 spec:
   port:
     targetPort: 8080
