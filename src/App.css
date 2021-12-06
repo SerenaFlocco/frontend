@@ -36,3 +36,17 @@
     transform: rotate(360deg);
   }
 }
+
+.margin {
+  margin-left: 50px;
+}
+
+.customNav {
+  background-color: rgb(248, 188, 165);
+}
+
+.cardStyle {
+  width: 50%;
+  margin-top: 150px;
+}
+
