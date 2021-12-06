@@ -1,5 +1,5 @@
 # build environment
-FROM node:lts-alpine as builder
+FROM node:alpine as builder
 WORKDIR /app
 COPY package.json ./
 COPY package-lock.json ./
