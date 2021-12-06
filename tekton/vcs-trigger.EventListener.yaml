@@ -1,0 +1,54 @@
+apiVersion: triggers.tekton.dev/v1alpha1
+kind: TriggerTemplate
+metadata:
+  name: vcs-trigger
+spec:
+  resourcetemplates:
+    - apiVersion: tekton.dev/v1beta1
+      kind: PipelineRun
+      metadata:
+        generateName: ci-pipeline-run-
+      spec:
+        pipelineRef:
+          name: new-pipeline
+        serviceAccountName: default
+        workspaces:
+          - name: workspace
+            volumeClaimTemplate:
+              spec:
+                accessModes:
+                  - ReadWriteMany
+                resources:
+                  requests:
+                    storage: 1Gi
+                storageClassName: ibmc-file-gold-gid
+                volumeMode: Filesystem
+---
+apiVersion: triggers.tekton.dev/v1alpha1
+kind: TriggerBinding
+metadata:
+  name: vcs-trigger
+---
+apiVersion: triggers.tekton.dev/v1alpha1
+kind: EventListener
+metadata:
+  name: vcs-trigger
+spec:
+  serviceAccountName: vcs-trigger
+  triggers:
+    - bindings:
+        - ref: vcs-trigger
+      template:
+        ref: vcs-trigger
+---
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: vcs-trigger-2
+spec:
+  port:
+    targetPort: 8080
+  to:
+    kind: Service
+    name: el-vcs-trigger
+    weight: 100
